@@ -13,17 +13,21 @@ def whiten(strain, interp_psd, dt):
     freqs1 = np.linspace(0, 2048, Nt // 2 + 1)
 
     # whitening: transform to freq domain, divide by asd, then transform back, 
-    # taking care to get normalization right.
+     #taking care to get normalization right.
+    interp_psd[interp_psd <= 0] = 1e-25
     hf = np.fft.rfft(strain)
-    norm = 1./np.sqrt(1./(dt*2))
-    white_hf = hf / np.sqrt(interp_psd(freqs)) * norm
+    #norm = 1./np.sqrt(1./(dt*2))
+    white_hf = hf / np.sqrt(interp_psd / 2.0 * dt)
     white_ht = np.fft.irfft(white_hf, n=Nt)
+    
     return white_ht
+    
+    
 
 
 # function to keep the data within integer limits, and write to wavfile:
 def write_wavfile(filename,fs,data):
-    d = np.int16(data/np.max(np.abs(data)) * 32767 * 0.9)
+    d = np.int16(data / np.max(np.abs(data)) * 32767)
     wavfile.write(filename,int(fs), d)
 
 
@@ -41,9 +45,11 @@ def reqshift(data,fshift=100,sample_rate=4096):
     z = np.fft.irfft(y)
     return z
 
+
+
     
 
-def plot_match_time1(time, tevent, timemax, strain_whitenbp, template_match, det, eventname, plottype, pcolor, SNR):
+def plot_SNR(time, tevent, timemax, strain_whitenbp, template_match, det, eventname, plottype, pcolor, SNR):
 # -- Plot the result
     plt.figure(figsize=(10,8))
     plt.subplot(2,1,1)
@@ -107,3 +113,6 @@ def plot_match_freq(template_fft, datafreq, data_psd, fs, d_eff, det, eventname,
     plt.legend(loc='upper left')
     plt.title(det+' ASD and template around event')
     plt.savefig('figures/' + eventname+"_"+det+"_matchfreq."+plottype)
+
+
+
