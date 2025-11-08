@@ -1,0 +1,26 @@
+# See docs at: https://mystmd.org/guide/frontmatter
+version: 1
+project:
+  id: 34c09621-1a62-41bb-a260-cdeb02cb269c
+  # title:
+  # description:
+  # keywords: []
+  # authors: []
+  github: https://github.com/UCB-stat-159-f25/hw3-vaniaalf
+  # To autogenerate a Table of Contents, run "myst init --write-toc"
+site:
+  template: book-theme
+  # options:
+  #   favicon: favicon.ico
+  #   logo: site_logo.png
+repository:
+  url: https://github.com/UCB-stat-159-f25/hw3-vaniaalf   #https://github.com/<your-username>/<your-repo-name>
+  branch: main 
+
+launch_buttons:
+  binder: true 
+
+format: jb-book
+root: README #landing page
+chapters:
+- file: LOSC_Event_tutorial 
