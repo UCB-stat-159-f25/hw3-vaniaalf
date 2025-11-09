@@ -17,6 +17,7 @@ jobs:
       # 2. INSTALL DEPENDENCIES
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           # Install MyST-NB and install your local ligotools package
           pip install myst-nb
           pip install -e .
