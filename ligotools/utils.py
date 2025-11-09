@@ -7,6 +7,7 @@ import scipy.io.wavfile as wavfile
 
 
 # function to whiten data
+
 def whiten(strain, interp_psd, dt):
     Nt = len(strain)
     freqs = np.fft.rfftfreq(Nt, dt)
@@ -14,10 +15,12 @@ def whiten(strain, interp_psd, dt):
 
     # whitening: transform to freq domain, divide by asd, then transform back, 
      #taking care to get normalization right.
-    interp_psd[interp_psd <= 0] = 1e-25
+    #interp_psd[interp_psd <= 0] = 1e-25
+    psd = interp_psd(freqs)
+    psd[psd <= 0] = 1e-25
     hf = np.fft.rfft(strain)
     #norm = 1./np.sqrt(1./(dt*2))
-    white_hf = hf / np.sqrt(interp_psd / 2.0 * dt)
+    white_hf = hf / np.sqrt(psd / 2.0 * dt)
     white_ht = np.fft.irfft(white_hf, n=Nt)
     
     return white_ht
