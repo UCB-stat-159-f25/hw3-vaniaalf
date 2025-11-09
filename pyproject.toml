@@ -2,6 +2,9 @@
 requires = ["setuptools >= 70", "wheel", "numpy"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+packages = ["ligotools", "ligotools.tests"]
+
 [project]
 name = "ligotools"
 authors = [

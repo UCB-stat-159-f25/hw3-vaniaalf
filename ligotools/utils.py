@@ -46,6 +46,18 @@ def reqshift(data,fshift=100,sample_rate=4096):
     return z
 
 
+def plot_PSD(freqs, P_strain, det, eventname, plottype):
+    
+    plt.figure(figsize=(10, 8))
+    plt.loglog(freqs, np.sqrt(P_strain), 'r', label=det + ' strain')
+    plt.xlabel('Frequency (Hz)')
+    plt.ylabel('ASD (strain/rtHz)')
+    plt.legend(loc='lower left')
+    plt.title('PSD for ' + det + ' ' + eventname + ' ' + plottype)
+    plt.savefig('FIG_PSD_' + det + '_' + eventname + '.png')
+    plt.close()
+    
+    return
 
     
 
