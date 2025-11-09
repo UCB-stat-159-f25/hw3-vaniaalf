@@ -1,5 +1,5 @@
-
 format: jb-book
-root: README #landing page
+root: README
 chapters:
-- file: LOSC_Event_tutorial 
+- file: LOSC_Event_tutorial
+
