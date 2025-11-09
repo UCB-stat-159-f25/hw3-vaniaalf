@@ -8,28 +8,33 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      # 2. INSTALL DEPENDENCIES
-      - name: Install dependencies
+      - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          # Install MyST-NB and install your local ligotools package
-          pip install myst-nb
           pip install -e .
 
-      # 3. BUILD THE SITE
-      - name: Build the site
-        run: |
-          myst build
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
 
-      # 4. DEPLOY THE SITE TO GH PAGES
+      - name: Install MyST
+        run: npm install -g mystmd
+
+      - name: Build the site
+        run: myst build
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: _build/html
+
