@@ -3,7 +3,7 @@ name: Deploy MyST Book to GitHub Pages
 on:
   push:
     branches:
-      - main 
+      - main
 
 jobs:
   build-and-deploy:
@@ -19,8 +19,8 @@ jobs:
         run: |
           # Install MyST-NB and install your local ligotools package
           pip install myst-nb
-          pip install -e . 
-          
+          pip install -e .
+
       # 3. BUILD THE SITE
       - name: Build the site
         run: |
