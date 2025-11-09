@@ -46,18 +46,20 @@ def reqshift(data,fshift=100,sample_rate=4096):
     return z
 
 
-def plot_PSD(freqs, P_strain, det, eventname, plottype):
-    
-    plt.figure(figsize=(10, 8))
-    plt.loglog(freqs, np.sqrt(P_strain), 'r', label=det + ' strain')
-    plt.xlabel('Frequency (Hz)')
+def plot_PSD(freqs, eventname, plottype, Pxx_L1, Pxx_H1, Pxx):
+    f_min = 20.
+    f_max = 2000. 
+    plt.figure(figsize=(10,8))
+    plt.loglog(freqs, np.sqrt(Pxx_L1),'g',label='L1 strain')
+    plt.loglog(freqs, np.sqrt(Pxx_H1),'r',label='H1 strain')
+    plt.loglog(freqs, np.sqrt(Pxx),'k',label='H1 strain, O1 smooth model')
+    plt.axis([f_min, f_max, 1e-24, 1e-19])
+    plt.grid('on')
     plt.ylabel('ASD (strain/rtHz)')
-    plt.legend(loc='lower left')
-    plt.title('PSD for ' + det + ' ' + eventname + ' ' + plottype)
-    plt.savefig('FIG_PSD_' + det + '_' + eventname + '.png')
-    plt.close()
-    
-    return
+    plt.xlabel('Freq (Hz)')
+    plt.legend(loc='upper center')
+    plt.title('Advanced LIGO strain data near '+eventname)
+    plt.savefig('figures/' + eventname+'_ASDs.'+plottype)
 
     
 
